@@ -1,3 +1,2 @@
 version=3
-opts="pgpmode=self" \
-http://mirror.kolabsys.com/pub/releases/libkolabxml-([0-9\.]+)\.tar\.gz\.gpg
+http://mirror.kolabsys.com/pub/releases/libkolabxml-([0-9\.]+)\.tar\.gz
