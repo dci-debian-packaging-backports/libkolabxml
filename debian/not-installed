@@ -1,0 +1,3 @@
+# python modules are renamed to contain the correspoding multi-arch identifier
+usr/lib*/python2*/*-packages/_kolabformat.so
+usr/lib*/python3*/*-packages/_kolabformat.so

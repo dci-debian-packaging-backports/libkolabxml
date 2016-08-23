@@ -1,0 +1,78 @@
+Source: libkolabxml
+Section: libs
+Priority: optional
+Maintainer: Debian Kolab Maintainers <pkg-kolab-devel@lists.alioth.debian.org>
+Uploaders: Paul Klos <kolab@klos2day.nl>, Diane Trout <diane@ghic.org>, Sandro Knauß <bugs@sandroknauss.de>
+Build-Depends: cmake,
+               debhelper (>= 9),
+               dh-python,
+               pkg-kde-tools (>= 0.12),
+               libxerces-c-dev,
+               xsdcxx (>= 4.0),
+               uuid-dev,
+               libboost-dev,
+               libboost-system-dev,
+               libboost-thread-dev,
+               swig,
+               libcurl4-gnutls-dev,
+               python-dev (>= 2.7),
+               python3-dev,
+               libqt4-dev
+X-Python-Version: >= 2.7
+Standards-Version: 3.9.7
+Homepage: http://git.kolab.org/libkolabxml
+Vcs-Git: https://anonscm.debian.org/git/pkg-kolab/libkolabxml.git
+Vcs-Browser: https://anonscm.debian.org/gitweb/?p=pkg-kolab/libkolabxml.git
+
+Package: libkolabxml1v5
+Architecture: any
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Breaks: libkolabxml1
+Replaces: libkolabxml1
+Description: Kolab XML format (shared library)
+ Libkolabxml is the reference implementation of the Kolab XML format.
+ .
+ The Kolab 3.0 XML format is defined in
+ <http://wiki.kolab.org/User:Mollekopf/Drafts/KEP:17>.
+ .
+ This package provides serialization/deserialization from/to  in-memory
+ representations for all Kolab Objects, including input validation.
+
+Package: python-kolabformat
+Architecture: any
+Section: python
+Depends: libkolabxml1v5 (= ${binary:Version}),
+         ${python:Depends},
+         ${misc:Depends},
+         ${shlibs:Depends}
+Description: Python 2 bindings for Kolab Format 3.0 XML parsing
+ Libkolabxml is the reference implementation of the Kolab XML format.
+ For more information see the libkolabxml package.
+ .
+ This package provides Python 2 bindings for libkolabxml.
+
+Package: python3-kolabformat
+Architecture: any
+Section: python
+Depends: libkolabxml1v5 (= ${binary:Version}),
+         ${python3:Depends},
+         ${misc:Depends},
+         ${shlibs:Depends}
+Description: Python 3 bindings for Kolab Format 3.0 XML parsing
+ Libkolabxml is the reference implementation of the Kolab XML format.
+ For more information see the libkolabxml package.
+ .
+ This package provides Python 3 bindings for libkolabxml.
+
+Package: libkolabxml-dev
+Section: libdevel
+Architecture: any
+Depends: libkolabxml1v5 (= ${binary:Version}),
+         ${misc:Depends}, libboost-dev, libboost-thread-dev, libxerces-c-dev,
+         libcurl4-gnutls-dev
+Description: Development files for libkolabxml
+ Libkolabxml is the reference implementation of the Kolab XML format.
+ For more information see the libkolabxml package.
+ .
+ This package provides development files libkolabxml.

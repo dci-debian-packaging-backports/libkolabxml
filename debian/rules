@@ -1,0 +1,47 @@
+#!/usr/bin/make -f
+
+PYTHON2 := $(shell pyversions -d)
+PYTHON3 := $(shell py3versions -d)
+PYTHON2_SITEARCH := $(shell python2 -c 'from distutils.sysconfig import get_python_lib; print get_python_lib(1)')
+PYTHON3_SITEARCH := $(shell python3 -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib(1))')
+BUILD_PY3 := build-py3
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+DPKG_EXPORT_BUILDFLAGS=1
+include /usr/share/dpkg/buildflags.mk
+CFLAGS+=$(CPPFLAGS)
+CXXFLAGS+=$(CPPFLAGS)
+
+export DEB_LDFLAGS_MAINT_APPEND="-Wl,--as-needed"
+
+%:
+	dh $@ --parallel --with python2,python3,pkgkde_symbolshelper
+
+override_dh_auto_configure:
+	dh_auto_configure -- \
+		-DPYTHON_BINDINGS=ON \
+		-DPYTHON_INSTALL_DIR=$(PYTHON2_SITEARCH) \
+		-DPYTHON_INCLUDE_DIR=/usr/include/$(PYTHON2) \
+		-DPYTHON_LIBRARY=/usr/lib/$(DEB_BUILD_MULTIARCH)/lib$(PYTHON2).so
+	dh_auto_configure --builddirectory=$(BUILD_PY3) -- \
+		-DPYTHON_BINDINGS=ON \
+		-DPYTHON_INSTALL_DIR=$(PYTHON3_SITEARCH) \
+		-DPYTHON_INCLUDE_DIR=/usr/include/$(PYTHON3) \
+		-DPYTHON_LIBRARY=/usr/lib/$(DEB_BUILD_MULTIARCH)/lib$(PYTHON3)m.so
+
+override_dh_auto_build:
+	dh_auto_build --parallel --builddirectory=$(BUILD_PY3)
+	dh_auto_build --parallel
+
+override_dh_auto_install:
+	dh_auto_install --builddirectory=$(BUILD_PY3)
+	dh_auto_install
+
+override_dh_install:
+	dh_install --fail-missing
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -rf $(BUILD_PY3)
+
